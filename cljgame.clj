@@ -1,4 +1,5 @@
-(ns cljgame)
+(ns cljgame
+  (:use vector))
 
 (defmacro defbackendfun [name docstring args]
   (let [backend-name (symbol (str "backend-" name))]

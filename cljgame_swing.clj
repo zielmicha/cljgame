@@ -1,5 +1,6 @@
 (ns cljgame-swing
-  [:use [cljgame]])
+  (:use cljgame)
+  (:use vector))
 
 (def window)
 (def component)
@@ -24,7 +25,7 @@
     (swap! events (fn [val] (cons ev val)))))
 
 (defn emit-mouse-ev! [type ev]
-  (emit-ev! :cljgame/type type :cljgame/pos [(.getX ev) (.getY ev)]))
+  (emit-ev! :cljgame/type type :cljgame/pos (vec2d (.getX ev) (.getY ev))))
 
 (defmethod backend-init-screen! ::swing [backend w h]
   (def component (proxy [javax.swing.JComponent] []
@@ -69,7 +70,7 @@
 
 (defmethod backend-draw! [::swing :cljgame/translate] [backend thing]
   (saving-transform!
-   (.translate *canvas* (first (:cljgame/by thing)) (second (:cljgame/by thing)))
+   (.translate *canvas* (:x (:cljgame/by thing)) (:y (:cljgame/by thing)))
    (backend-draw! backend (:cljgame/item thing))))
 
 (defmethod backend-draw! [::swing :cljgame/rectangle] [backend thing]
