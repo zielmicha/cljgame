@@ -18,6 +18,10 @@
   "Create game window and show it."
   [w h])
 
+(defn init! [backend w h]
+  (use-backend! backend)
+  (init-screen! w h))
+
 (def backend-draw!)
 
 (defbackendfun draw-on-screen!
@@ -70,5 +74,8 @@
 (defn translate [item vec]
   "Translates `item` by vector `vec`."
   {::type ::translate, ::item item, ::by vec})
+
+(defn rectangle [shape & {:keys [color]}]
+  {::type ::rectangle, ::shape shape, ::color color})
 
 (defrecord Event [type])

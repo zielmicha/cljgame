@@ -55,7 +55,7 @@
       (backend-draw! backend thing))))
 
 (defmethod backend-draw! [::swing clojure.lang.ISeq] [backend thing]
-  (doseq [item thing] (backend-draw! backend thing)))
+  (doseq [item thing] (backend-draw! backend item)))
 
 (defmethod backend-draw! [::swing nil] [backend thing] )
 
@@ -71,6 +71,10 @@
   (saving-transform!
    (.translate *canvas* (first (:cljgame/by thing)) (second (:cljgame/by thing)))
    (backend-draw! backend (:cljgame/item thing))))
+
+(defmethod backend-draw! [::swing :cljgame/rectangle] [backend thing]
+  (let [shape (:cljgame/shape thing)]
+   (.drawRect *canvas* (:x shape) (:y shape) (:w shape) (:h shape))))
 
 (defmethod backend-wait-for-frame! ::swing [backend fps]
   (Thread/sleep (/ 1000 fps)))
