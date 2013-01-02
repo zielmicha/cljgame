@@ -2,8 +2,7 @@
   (:require cljgame)
   (:require cljgame-swing))
 
-(cljgame/use-backend! :cljgame-swing/swing)
-(cljgame/init-screen! 500 500)
+(cljgame/init! :cljgame-swing/swing 500 500)
 
 (def icon (cljgame/get-image "git_icon.png"))
 
